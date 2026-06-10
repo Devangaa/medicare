@@ -105,10 +105,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaksi', [StaffTransaksiController::class, 'index'])->name('transaksi.index');
 
         // Menu 4: Pembelian Obat
-        Route::get('/pembelian-obat',[StaffPembelianObatController::class, 'index'])->name('staff.pembelian-obat.index');
+        Route::get('/pembelian-obat',[StaffPembelianObatController::class, 'index'])->name('pembelian-obat.index');
+        Route::post('/pembelian-obat',[StaffPembelianObatController::class, 'store'])->name('pembelian-obat.store');
 
         // Menu 5: Pembuangan Obat
-        Route::get('/pembuangan-obat',[StaffPembuanganObatController::class, 'index'])->name('staff.pembuangan-obat.index');
+        Route::get('/pembuangan-obat',[StaffPembuanganObatController::class, 'index'])->name('pembuangan-obat.index');
         // Kamu bisa tambahkan rute input transaksi / pembuangan obat versi staff disini nanti...
     });
 
