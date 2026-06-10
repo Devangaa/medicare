@@ -64,6 +64,11 @@ Route::middleware('auth')->group(function () {
 
         // Menu 3: Data Obat
         Route::get('/obat', [ObatController::class, 'index'])->name('obat.index');
+        Route::put('/obat/{id}',[ObatController::class, 'update'])->name('obat.update');
+        Route::post('/obat/{id}/approve',[ObatController::class, 'approve'])->name('obat.approve');
+        Route::post('/obat/{id}/reject',[ObatController::class, 'reject'])->name('obat.reject');
+        Route::post('/obat/{id}/delete',[ObatController::class, 'destroy'])->name('obat.delete');
+        Route::post('/obat/{id}/restore',[ObatController::class, 'restore'])->name('obat.restore');
 
         // Menu 4: Transaksi
         Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');

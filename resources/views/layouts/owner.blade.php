@@ -159,9 +159,19 @@
                 transform: translateX(0);
             }
         }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 </head>
-<body class="bg-[#090d16] text-slate-200 min-h-screen overflow-hidden flex">
+<body class="bg-[#090d16] text-slate-200 h-screen flex overflow-hidden">
 
     <!-- SIDEBAR KIRI -->
     <aside id="sidebar"
@@ -246,7 +256,7 @@
     </aside>
 
     <!-- AREA KONTEN UTAMA (Kanan) -->
-    <div class="flex-1 flex flex-col min-w-0">
+    <div class="flex-1 flex flex-col h-screen">
         
         <!-- NAVBAR ATAS -->
         <header class="h-20 bg-[#0f172a]/80 backdrop-blur-md border-b border-slate-800 px-4 sm:px-6 md:px-8 flex items-center justify-between sticky top-0 z-40">
