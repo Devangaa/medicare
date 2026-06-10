@@ -161,11 +161,12 @@
         }
     </style>
 </head>
-<body class="bg-[#090d16] text-slate-200 min-h-screen flex">
+<body class="bg-[#090d16] text-slate-200 min-h-screen overflow-hidden flex">
 
     <!-- SIDEBAR KIRI -->
-    <aside id="sidebar" class="sidebar-mobile md:relative w-64 bg-[#0f172a] border-r border-slate-800 flex flex-col justify-between p-5 md:flex shrink-0 transition-all duration-300">
-        <div class="space-y-8">
+    <aside id="sidebar"
+        class="sidebar-mobile md:relative md:h-screen w-64 bg-[#0f172a] border-r border-slate-800 flex flex-col justify-between p-5 md:flex shrink-0 transition-all duration-300 overflow-hidden">
+        <div class="space-y-8 flex-1 overflow-y-auto pr-1">
             <!-- Brand Logo Medicare - Toggle Button (Desktop Collapse) -->
             <button id="sidebar-logo-toggle"
                 class="hidden md:flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-slate-800/40 transition-colors group w-full text-left">

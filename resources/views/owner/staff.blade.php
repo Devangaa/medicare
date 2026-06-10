@@ -17,7 +17,9 @@
             <p class="text-slate-400 text-xs mt-1">Kelola hak akses, biodata, dan status keaktifan staff apotek Medicare.</p>
         </div>
         <div>
-            <button class="cursor-pointer w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-xl shadow-lg shadow-blue-600/20 active:scale-[0.98] transition-all">
+            <button
+                onclick="openCreateModal()"
+                class="cursor-pointer w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-xl shadow-lg shadow-blue-600/20 active:scale-[0.98] transition-all">
                 <i class="fa-solid fa-user-plus"></i>
                 <span>Tambah Staff Baru</span>
             </button>
@@ -109,20 +111,25 @@
             </table>
         </div>
 
-        <div class="bg-slate-900/20 border-t border-slate-800/60 px-6 py-4 flex items-center justify-between text-xs text-slate-400">
-            <span>Menampilkan {{ count($staffs) }} entri staff</span>
-            <div class="flex items-center gap-1">
-                <button class="px-2.5 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-500 cursor-not-allowed" disabled><i class="fa-solid fa-chevron-left"></i></button>
-                <button class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold">1</button>
-                <button class="px-2.5 py-1.5 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
-            </div>
-        </div>
-
     </div>
 </div>
 
 <script>
     let currentStaffId = null;
+
+    function openCreateModal() {
+        const form = document.getElementById('createStaffForm');
+
+        form.reset();
+
+        document.getElementById('createStaffModal')
+            .classList.remove('hidden');
+    }
+
+    function closeCreateModal() {
+        document.getElementById('createStaffModal')
+            .classList.add('hidden');
+    }
 
     function openEditModal(staffId, namaLengkap, email, noHp, alamat) {
         currentStaffId = staffId;
@@ -307,6 +314,7 @@
     });
 </script>
 
+@include('owner.modals.staff-create')
 @include('owner.modals.staff-edit')
 @include('owner.modals.staff-reset-password')
 @include('owner.modals.staff-toggle-status')

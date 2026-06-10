@@ -57,8 +57,8 @@ Route::middleware('auth')->group(function () {
 
         // Menu 2: Data Staff
         Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
-        Route::get('/staff/{id}/edit', [StaffController::class, 'edit'])->name('staff.edit');
-        Route::put('/staff/{id}', [StaffController::class, 'update'])->name('staff.update');
+        Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
+        Route::put('/staff/{id}/edit', [StaffController::class, 'update'])->name('staff.update');
         Route::post('/staff/{id}/reset-password', [StaffController::class, 'resetPassword'])->name('staff.reset-password');
         Route::post('/staff/{id}/toggle-status', [StaffController::class, 'toggleStatus'])->name('staff.toggle-status');
 
