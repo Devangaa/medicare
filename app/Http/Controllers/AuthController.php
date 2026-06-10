@@ -31,7 +31,7 @@ class AuthController extends Controller
 
             // Ambil data user yang berhasil login
             $user = Auth::user();
-            
+
             // Cek role untuk mengarahkan halaman (Menggunakan rute bernama agar lebih aman)
             if ($user->role === 'owner') {
                 return redirect()->route('owner.dashboard');

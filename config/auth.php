@@ -64,7 +64,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Akun::class, // Ubah ke Model Akun
+            'model' => Akun::class, // Ubah ke Model Akun
         ],
     ],
 

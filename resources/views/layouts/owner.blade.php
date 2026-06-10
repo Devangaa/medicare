@@ -36,16 +36,53 @@
             justify-content: center !important;
             padding: 0.75rem !important;
             gap: 0 !important;
+            position: relative;
         }
-        
+
         .sidebar-collapsed #sidebar-logo-toggle .flex {
             margin: 0 !important;
         }
-        
+
+        /* SEMBUNYIKAN PANAH SAAT COLLAPSED */
         .sidebar-collapsed #sidebar-toggle-icon {
-            transform: rotate(180deg);
-            position: static !important;
-            display: block !important;
+            display: none !important;
+        }
+
+        /* default collapsed = tampil heart */
+        .sidebar-collapsed #heart-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .sidebar-collapsed #arrow-icon {
+            opacity: 0;
+            transform: scale(0.75);
+        }
+
+        .sidebar-collapsed #heart-icon,
+        .sidebar-collapsed #arrow-icon {
+            transition:
+                opacity .25s ease,
+                transform .25s ease;
+        }
+
+
+        /* hover = heart berubah jadi arrow */
+        .sidebar-collapsed #sidebar-logo-toggle:hover #heart-icon {
+            opacity: 0;
+            transform: scale(0.75);
+        }
+
+        .sidebar-collapsed #sidebar-logo-toggle:hover #arrow-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* TAMPILKAN SAAT HOVER */
+        .sidebar-collapsed #sidebar-logo-toggle:hover #sidebar-toggle-icon {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
         }
         
         /* Menu items collapsed - centered */
@@ -130,13 +167,26 @@
     <aside id="sidebar" class="sidebar-mobile md:relative w-64 bg-[#0f172a] border-r border-slate-800 flex flex-col justify-between p-5 md:flex shrink-0 transition-all duration-300">
         <div class="space-y-8">
             <!-- Brand Logo Medicare - Toggle Button (Desktop Collapse) -->
-            <button id="sidebar-logo-toggle" class="hidden md:flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-slate-800/40 transition-colors group w-full text-left">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30 shrink-0">
-                    <i class="fa-solid fa-heart-pulse text-lg animate-pulse"></i>
+            <button id="sidebar-logo-toggle"
+                class="hidden md:flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-slate-800/40 transition-colors group w-full text-left">
+
+                <div id="logo-container"
+                    class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30 shrink-0 relative overflow-hidden">
+
+                    <i id="heart-icon"
+                        class="fa-solid fa-heart-pulse text-lg absolute transition-all duration-300"></i>
+
+                    <i id="arrow-icon"
+                        class="fa-solid fa-chevron-right text-lg absolute opacity-0 scale-75 transition-all duration-300"></i>
+
                 </div>
-                <span class="brand-logo-text text-lg font-bold tracking-widest text-white uppercase flex-1 min-w-0">Medicare</span>
-                <!-- Toggle Icon (Collapse/Expand) -->
-                <i id="sidebar-toggle-icon" class="fa-solid fa-chevron-left w-5 text-slate-400 group-hover:text-slate-200 transition-colors shrink-0"></i>
+
+                <span class="brand-logo-text text-lg font-bold tracking-widest text-white uppercase flex-1 min-w-0">
+                    Medicare
+                </span>
+
+                <i id="sidebar-toggle-icon"
+                    class="fa-solid fa-chevron-left w-5 text-slate-400 group-hover:text-slate-200 transition-colors shrink-0"></i>
             </button>
 
             <!-- Brand Logo Medicare - Mobile Close Button -->

@@ -15,29 +15,29 @@ class AkunSeeder extends Seeder
     {
         DB::table('akun')->insert([
             [
-                'username'     => 'owner',
-                'password'     => Hash::make('owner123'), // Password untuk login owner
-                'role'         => 'owner',
+                'username' => 'owner',
+                'password' => Hash::make('owner123'), // Password untuk login owner
+                'role' => 'owner',
                 'nama_lengkap' => 'Dr. Derrick Timothy, M.Kes',
-                'email'        => 'owner@medicare.com',
-                'no_hp'        => '081234567890',
-                'alamat'       => 'Jl. Raya Jember No. 45, Jember',
-                'is_delete'    => false,
-                'created_at'   => now(),
-                'updated_at'   => now(),
+                'email' => 'owner@medicare.com',
+                'no_hp' => '081234567890',
+                'alamat' => 'Jl. Raya Jember No. 45, Jember',
+                'is_delete' => false,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'username'     => 'staff',
-                'password'     => Hash::make('staff123'), // Password untuk login staff
-                'role'         => 'staff',
+                'username' => 'staff',
+                'password' => Hash::make('staff123'), // Password untuk login staff
+                'role' => 'staff',
                 'nama_lengkap' => 'Siti Aminah, A.Md.Farm',
-                'email'        => 'staff@medicare.com',
-                'no_hp'        => '089876543210',
-                'alamat'       => 'Jl. Mastrip No. 12, Jember',
-                'is_delete'    => false,
-                'created_at'   => now(),
-                'updated_at'   => now(),
-            ]
+                'email' => 'staff@medicare.com',
+                'no_hp' => '089876543210',
+                'alamat' => 'Jl. Mastrip No. 12, Jember',
+                'is_delete' => false,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }
