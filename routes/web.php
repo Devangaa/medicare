@@ -3,8 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Owner\DashboardController;
 use App\Http\Controllers\Owner\ObatController;
-use App\Http\Controllers\Owner\PembelianController;
-use App\Http\Controllers\Owner\PembuanganController;
+use App\Http\Controllers\Owner\PembelianObatController;
+use App\Http\Controllers\Owner\PembuanganObatController;
 use App\Http\Controllers\Owner\StaffController;
 use App\Http\Controllers\Owner\TransaksiController;
 use App\Http\Controllers\ProfileController;
@@ -74,10 +74,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
 
         // Menu 5: Pembelian Obat
-        Route::get('/pembelian', [PembelianController::class, 'index'])->name('pembelian.index');
+        Route::get('/pembelian-obat',[PembelianObatController::class, 'index'])->name('owner.pembelian-obat');
+        Route::put('/pembelian-obat/{id}/approve',[PembelianObatController::class, 'approve']);
+        Route::put('/pembelian-obat/{id}/reject',[PembelianObatController::class, 'reject']);
 
         // Menu 6: Pembuangan Obat
-        Route::get('/pembuangan', [PembuanganController::class, 'index'])->name('pembuangan.index');
+        Route::get('/pembuangan-obat',[PembuanganObatController::class, 'index'])->name('owner.pembuangan-obat');
+        Route::patch('/pembuangan-obat/{id}/approve',[PembuanganObatController::class, 'approve']);
+        Route::patch('/pembuangan-obat/{id}/reject',[PembuanganObatController::class, 'reject']);
     });
 
     // ==========================================
@@ -86,9 +90,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:staff')->prefix('staff')->name('staff.')->group(function () {
 
         // Dashboard Staff
-        Route::get('/dashboard', function () {
-            return 'Halo Staff Operasional! Ini halaman kerjamu.';
-        })->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // Kamu bisa tambahkan rute input transaksi / pembuangan obat versi staff disini nanti...
     });

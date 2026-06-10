@@ -22,4 +22,20 @@ class DetailObat extends Model
             'id_obat'
         );
     }
+
+    public function detailTransaksi()
+    {
+        return $this->hasMany(
+            DetailTransaksi::class,
+            'id_detail_obat'
+        );
+    }
+
+    public function pembuanganObat()
+    {
+        return $this->hasMany(
+            PembuanganObat::class,
+            'id_detail_obat'
+        );
+    }
 }

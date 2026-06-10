@@ -11,10 +11,10 @@
 @section('content')
 <div class="space-y-6 animate-fade-in">
 
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-[#0f172a] border border-slate-800 p-5 rounded-2xl shadow-xl">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-[#0f172a] border border-slate-800 p-6 rounded-2xl shadow-xl">
         <div>
-            <h3 class="text-lg font-bold text-white tracking-wide">Daftar Akun Staff</h3>
-            <p class="text-slate-400 text-xs mt-1">Kelola hak akses, biodata, dan status keaktifan staff apotek Medicare.</p>
+            <h3 class="text-xl font-bold text-white">Daftar Akun Staff</h3>
+            <p class="text-slate-400 text-sm mt-1">Kelola hak akses, biodata, dan status keaktifan staff apotek Medicare.</p>
         </div>
         <div>
             <button
@@ -31,7 +31,7 @@
         <div class="w-full overflow-x-auto scrolling-touch">
             <table class="w-full text-left border-collapse whitespace-nowrap">
                 <thead>
-                    <tr class="border-b border-slate-800 bg-slate-900/40 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    <tr class="border-b border-slate-800 bg-slate-900/40 text-[12px] font-bold uppercase tracking-wider text-slate-400">
                         <th class="py-4 px-6">Nama Lengkap</th>
                         <th class="py-4 px-6">Username</th>
                         <th class="py-4 px-6">Kontak & Email</th>
@@ -54,7 +54,7 @@
                             </td>
                             
                             <td class="py-4 px-6 font-mono text-xs text-slate-400">
-                                @<span>{{ $staff->username }}</span>
+                                <span>{{ $staff->username }}</span>
                             </td>
                             
                             <td class="py-4 px-6">

@@ -239,13 +239,13 @@
                 </a>
 
                 <!-- Pembelian Obat -->
-                <a href="{{ url('/owner/pembelian') }}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ Request::is('owner/pembelian*') ? 'bg-slate-800 text-white border border-slate-700 shadow-lg' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200' }}" data-icon="fa-cart-shopping" data-label="Pembelian Obat">
+                <a href="{{ url('/owner/pembelian-obat') }}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ Request::is('owner/pembelian*') ? 'bg-slate-800 text-white border border-slate-700 shadow-lg' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200' }}" data-icon="fa-cart-shopping" data-label="Pembelian Obat">
                     <i class="fa-solid fa-cart-shopping w-5 shrink-0"></i>
                     <span class="sidebar-text">Pembelian Obat</span>
                 </a>
 
                 <!-- Pembuangan Obat -->
-                <a href="{{ url('/owner/pembuangan') }}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ Request::is('owner/pembuangan*') ? 'bg-slate-800 text-white border border-slate-700 shadow-lg' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200' }}" data-icon="fa-trash-can" data-label="Pembuangan Obat">
+                <a href="{{ url('/owner/pembuangan-obat') }}" class="menu-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ Request::is('owner/pembuangan*') ? 'bg-slate-800 text-white border border-slate-700 shadow-lg' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200' }}" data-icon="fa-trash-can" data-label="Pembuangan Obat">
                     <i class="fa-solid fa-trash-can w-5 shrink-0"></i>
                     <span class="sidebar-text">Pembuangan Obat</span>
                 </a>

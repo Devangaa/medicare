@@ -13,10 +13,8 @@
     <div class="absolute bottom-[-10%] right-[-10%] h-[350px] w-[350px] sm:h-[550px] sm:w-[550px] rounded-full bg-teal-500/10 blur-[120px] sm:blur-[140px]"></div>
     
     <div class="relative z-10 flex flex-col items-center justify-center mb-8 text-center animate-fade-in animate-duration-300">
-        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-teal-400 mb-3 shadow-xl border border-white/10 backdrop-blur-md ring-4 ring-white/5">
-            <svg class="h-6 w-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-            </svg>
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-blue-400 mb-3 shadow-xl border border-white/10 backdrop-blur-md ring-4 ring-white/5">
+            <i class="fa-solid fa-heart-pulse text-3xl animate-pulse"></i>
         </div>
         <h1 class="text-2xl font-extrabold tracking-wider text-white uppercase sm:text-3xl">
             Medicare
