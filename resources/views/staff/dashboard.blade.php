@@ -1,4 +1,4 @@
-@extends('layouts.owner')
+@extends('layouts.staff')
 
 @section('title', 'Dashboard')
 
@@ -10,44 +10,17 @@
     <div class="bg-[#0f172a] border border-slate-800 rounded-2xl p-6">
 
         <h3 class="text-xl font-bold text-white">
-            Dashboard Owner
+            Dashboard Staff
         </h3>
 
         <p class="text-sm text-slate-400 mt-1">
-            Ringkasan kondisi operasional apotek.
+            Ringkasan aktivitas dan informasi akun anda.
         </p>
 
     </div>
 
     {{-- Statistik --}}
-    <div class="grid lg:grid-cols-3 gap-6">
-
-        <div class="bg-[#0f172a] border border-slate-800 rounded-2xl p-6">
-
-            <div class="flex items-center justify-between">
-
-                <div>
-
-                    <p class="text-sm text-slate-400">
-                        Total Obat
-                    </p>
-
-                    <h3 class="text-3xl font-bold text-white mt-2">
-                        {{ number_format($totalObat) }}
-                    </h3>
-
-                </div>
-
-                <div class="h-14 w-14 rounded-2xl bg-blue-500/10 flex items-center justify-center">
-
-                    <i class="fa-solid fa-capsules text-blue-400 text-xl"></i>
-
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="grid md:grid-cols-3 gap-6">
 
         <div class="bg-[#0f172a] border border-slate-800 rounded-2xl p-6">
 
@@ -65,9 +38,35 @@
 
                 </div>
 
+                <div class="h-14 w-14 rounded-2xl bg-blue-500/10 flex items-center justify-center">
+
+                    <i class="fa-solid fa-wallet text-blue-400 text-xl"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="bg-[#0f172a] border border-slate-800 rounded-2xl p-6">
+
+            <div class="flex items-center justify-between">
+
+                <div>
+
+                    <p class="text-sm text-slate-400">
+                        Request Pembelian
+                    </p>
+
+                    <h3 class="text-3xl font-bold text-white mt-2">
+                        {{ number_format($totalPembelian) }}
+                    </h3>
+
+                </div>
+
                 <div class="h-14 w-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center">
 
-                    <i class="fa-solid fa-receipt text-emerald-400 text-xl"></i>
+                    <i class="fa-solid fa-cart-shopping text-emerald-400 text-xl"></i>
 
                 </div>
 
@@ -82,68 +81,11 @@
                 <div>
 
                     <p class="text-sm text-slate-400">
-                        Pendapatan
+                        Request Pembuangan
                     </p>
 
-                    <h3 class="text-2xl font-bold text-emerald-400 mt-2">
-                        Rp {{ number_format($pendapatan,0,',','.') }}
-                    </h3>
-
-                </div>
-
-                <div class="h-14 w-14 rounded-2xl bg-green-500/10 flex items-center justify-center">
-
-                    <i class="fa-solid fa-wallet text-green-400 text-xl"></i>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    {{-- Persetujuan --}}
-    <div class="grid md:grid-cols-2 gap-6">
-
-        <div class="bg-[#0f172a] border border-slate-800 rounded-2xl p-6">
-
-            <div class="flex items-center justify-between">
-
-                <div>
-
-                    <p class="text-sm text-slate-400">
-                        Pembelian Menunggu Persetujuan
-                    </p>
-
-                    <h3 class="text-3xl font-bold text-yellow-400 mt-2">
-                        {{ number_format($pendingPembelian) }}
-                    </h3>
-
-                </div>
-
-                <div class="h-14 w-14 rounded-2xl bg-yellow-500/10 flex items-center justify-center">
-
-                    <i class="fa-solid fa-cart-plus text-yellow-400 text-xl"></i>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="bg-[#0f172a] border border-slate-800 rounded-2xl p-6">
-
-            <div class="flex items-center justify-between">
-
-                <div>
-
-                    <p class="text-sm text-slate-400">
-                        Pembuangan Menunggu Persetujuan
-                    </p>
-
-                    <h3 class="text-3xl font-bold text-rose-400 mt-2">
-                        {{ number_format($pendingPembuangan) }}
+                    <h3 class="text-3xl font-bold text-white mt-2">
+                        {{ number_format($totalPembuangan) }}
                     </h3>
 
                 </div>
@@ -160,10 +102,10 @@
 
     </div>
 
-    {{-- Informasi Owner & Quick Access --}}
+    {{-- Informasi Staff + Quick Menu --}}
     <div class="grid lg:grid-cols-2 gap-6">
 
-        {{-- Informasi Owner --}}
+        {{-- Informasi Staff --}}
         <div class="bg-[#0f172a] border border-slate-800 rounded-2xl p-6">
 
             <h3 class="text-lg font-bold text-white mb-5">
@@ -203,7 +145,7 @@
                     </p>
 
                     <span class="inline-flex mt-1 px-3 py-1 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase">
-                        Owner
+                        Staff
                     </span>
 
                 </div>
@@ -233,44 +175,47 @@
 
             <div class="grid grid-cols-2 gap-4">
 
+                {{-- Kasir --}}
                 <a
-                    href="{{ url('/owner/obat') }}"
+                    href="#"
                     class="col-span-2 p-5 rounded-2xl border border-blue-500/20 bg-blue-500/10 hover:bg-blue-500/20 transition-all flex items-center gap-4">
 
                     <div class="h-12 w-12 rounded-xl bg-blue-500/20 flex items-center justify-center">
 
-                        <i class="fa-solid fa-capsules text-blue-400 text-xl"></i>
+                        <i class="fa-solid fa-cash-register text-blue-400 text-xl"></i>
 
                     </div>
 
                     <div>
 
                         <h4 class="text-sm font-bold text-white">
-                            Data Obat
+                            Kasir
                         </h4>
 
                         <p class="text-xs text-slate-400 mt-1">
-                            Kelola seluruh data dan batch obat
+                            Buat transaksi penjualan obat
                         </p>
 
                     </div>
 
                 </a>
 
+                {{-- Data Obat --}}
                 <a
-                    href="{{ url('/owner/staff') }}"
-                    class="p-5 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-violet-500 transition-all">
+                    href="{{ url('/staff/obat') }}"
+                    class="p-5 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500 transition-all">
 
-                    <i class="fa-solid fa-users text-violet-400 text-xl mb-3"></i>
+                    <i class="fa-solid fa-capsules text-cyan-400 text-xl mb-3"></i>
 
                     <h4 class="text-sm font-semibold text-white">
-                        Staff
+                        Data Obat
                     </h4>
 
                 </a>
 
+                {{-- Transaksi --}}
                 <a
-                    href="{{ url('/owner/transaksi') }}"
+                    href="{{ url('/staff/transaksi') }}"
                     class="p-5 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-emerald-500 transition-all">
 
                     <i class="fa-solid fa-wallet text-emerald-400 text-xl mb-3"></i>
@@ -281,8 +226,9 @@
 
                 </a>
 
+                {{-- Pembelian --}}
                 <a
-                    href="{{ url('/owner/pembelian-obat') }}"
+                    href="{{ url('/staff/pembelian-obat') }}"
                     class="p-5 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-yellow-500 transition-all">
 
                     <i class="fa-solid fa-cart-shopping text-yellow-400 text-xl mb-3"></i>
@@ -293,8 +239,9 @@
 
                 </a>
 
+                {{-- Pembuangan --}}
                 <a
-                    href="{{ url('/owner/pembuangan-obat') }}"
+                    href="{{ url('/staff/pembuangan-obat') }}"
                     class="p-5 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-rose-500 transition-all">
 
                     <i class="fa-solid fa-trash-can text-rose-400 text-xl mb-3"></i>

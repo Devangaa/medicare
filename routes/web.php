@@ -1,12 +1,17 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Owner\DashboardController;
-use App\Http\Controllers\Owner\ObatController;
-use App\Http\Controllers\Owner\PembelianObatController;
-use App\Http\Controllers\Owner\PembuanganObatController;
-use App\Http\Controllers\Owner\StaffController;
-use App\Http\Controllers\Owner\TransaksiController;
+use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
+use App\Http\Controllers\Owner\ObatController as OwnerObatController;
+use App\Http\Controllers\Owner\PembelianObatController as OwnerPembelianObatController;
+use App\Http\Controllers\Owner\PembuanganObatController as OwnerPembuanganObatController; 
+use App\Http\Controllers\Owner\StaffController as OwnerStaffController;
+use App\Http\Controllers\Owner\TransaksiController as OwnerTransaksiController;
+use App\Http\Controllers\Staff\DashboardController as StaffDashboardController;
+use App\Http\Controllers\Staff\ObatController as StaffObatController;
+use App\Http\Controllers\Staff\PembelianObatController as StaffPembelianObatController;
+use App\Http\Controllers\Staff\PembuanganObatController as StaffPembuanganObatController; 
+use App\Http\Controllers\Staff\TransaksiController as StaffTransaksiController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,35 +58,35 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:owner')->prefix('owner')->name('owner.')->group(function () {
 
         // Menu 1: Dashboard Owner
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [OwnerDashboardController::class, 'index'])->name('dashboard');
 
         // Menu 2: Data Staff
-        Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
-        Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
-        Route::put('/staff/{id}/edit', [StaffController::class, 'update'])->name('staff.update');
-        Route::post('/staff/{id}/reset-password', [StaffController::class, 'resetPassword'])->name('staff.reset-password');
-        Route::post('/staff/{id}/toggle-status', [StaffController::class, 'toggleStatus'])->name('staff.toggle-status');
+        Route::get('/staff', [OwnerStaffController::class, 'index'])->name('staff.index');
+        Route::post('/staff', [OwnerStaffController::class, 'store'])->name('staff.store');
+        Route::put('/staff/{id}/edit', [OwnerStaffController::class, 'update'])->name('staff.update');
+        Route::post('/staff/{id}/reset-password', [OwnerStaffController::class, 'resetPassword'])->name('staff.reset-password');
+        Route::post('/staff/{id}/toggle-status', [OwnerStaffController::class, 'toggleStatus'])->name('staff.toggle-status');
 
         // Menu 3: Data Obat
-        Route::get('/obat', [ObatController::class, 'index'])->name('obat.index');
-        Route::put('/obat/{id}',[ObatController::class, 'update'])->name('obat.update');
-        Route::post('/obat/{id}/approve',[ObatController::class, 'approve'])->name('obat.approve');
-        Route::post('/obat/{id}/reject',[ObatController::class, 'reject'])->name('obat.reject');
-        Route::post('/obat/{id}/delete',[ObatController::class, 'destroy'])->name('obat.delete');
-        Route::post('/obat/{id}/restore',[ObatController::class, 'restore'])->name('obat.restore');
+        Route::get('/obat', [OwnerObatController::class, 'index'])->name('obat.index');
+        Route::put('/obat/{id}',[OwnerObatController::class, 'update'])->name('obat.update');
+        Route::post('/obat/{id}/approve',[OwnerObatController::class, 'approve'])->name('obat.approve');
+        Route::post('/obat/{id}/reject',[OwnerObatController::class, 'reject'])->name('obat.reject');
+        Route::post('/obat/{id}/delete',[OwnerObatController::class, 'destroy'])->name('obat.delete');
+        Route::post('/obat/{id}/restore',[OwnerObatController::class, 'restore'])->name('obat.restore');
 
         // Menu 4: Transaksi
-        Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+        Route::get('/transaksi', [OwnerTransaksiController::class, 'index'])->name('transaksi.index');
 
         // Menu 5: Pembelian Obat
-        Route::get('/pembelian-obat',[PembelianObatController::class, 'index'])->name('owner.pembelian-obat');
-        Route::put('/pembelian-obat/{id}/approve',[PembelianObatController::class, 'approve']);
-        Route::put('/pembelian-obat/{id}/reject',[PembelianObatController::class, 'reject']);
+        Route::get('/pembelian-obat',[OwnerPembelianObatController::class, 'index'])->name('owner.pembelian-obat.index');
+        Route::put('/pembelian-obat/{id}/approve',[OwnerPembelianObatController::class, 'approve']);
+        Route::put('/pembelian-obat/{id}/reject',[OwnerPembelianObatController::class, 'reject']);
 
         // Menu 6: Pembuangan Obat
-        Route::get('/pembuangan-obat',[PembuanganObatController::class, 'index'])->name('owner.pembuangan-obat');
-        Route::patch('/pembuangan-obat/{id}/approve',[PembuanganObatController::class, 'approve']);
-        Route::patch('/pembuangan-obat/{id}/reject',[PembuanganObatController::class, 'reject']);
+        Route::get('/pembuangan-obat',[OwnerPembuanganObatController::class, 'index'])->name('owner.pembuangan-obat.index');
+        Route::patch('/pembuangan-obat/{id}/approve',[OwnerPembuanganObatController::class, 'approve']);
+        Route::patch('/pembuangan-obat/{id}/reject',[OwnerPembuanganObatController::class, 'reject']);
     });
 
     // ==========================================
@@ -89,9 +94,21 @@ Route::middleware('auth')->group(function () {
     // ==========================================
     Route::middleware('role:staff')->prefix('staff')->name('staff.')->group(function () {
 
-        // Dashboard Staff
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        // Menu 1: Dashboard
+        Route::get('/dashboard',[StaffDashboardController::class, 'index'])->name('dashboard');
 
+         // Menu 2: Data Obat
+        Route::get('/obat', [StaffObatController::class, 'index'])->name('obat.index');
+        Route::post('/obat',[StaffObatController::class, 'store'])->name('obat.store');
+
+        // Menu 3: Transaksi
+        Route::get('/transaksi', [StaffTransaksiController::class, 'index'])->name('transaksi.index');
+
+        // Menu 4: Pembelian Obat
+        Route::get('/pembelian-obat',[StaffPembelianObatController::class, 'index'])->name('staff.pembelian-obat.index');
+
+        // Menu 5: Pembuangan Obat
+        Route::get('/pembuangan-obat',[StaffPembuanganObatController::class, 'index'])->name('staff.pembuangan-obat.index');
         // Kamu bisa tambahkan rute input transaksi / pembuangan obat versi staff disini nanti...
     });
 

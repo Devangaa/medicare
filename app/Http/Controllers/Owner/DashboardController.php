@@ -3,25 +3,88 @@
 namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
+use App\Models\Akun;
+use App\Models\DetailObat;
+use App\Models\Obat;
+use App\Models\PembelianObat;
+use App\Models\PembuanganObat;
+use App\Models\Transaksi;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    /**
-     * Menampilkan Halaman Utama Dashboard Owner
-     */
     public function index()
     {
-        // Contoh Pengambilan Data Statistik Riil dari Database Medicare untuk ditampilkan di Dashboard
-        // Kamu bisa menyesuaikan nama tabelnya nanti sesuai dengan migrasimu
-        $statistik = [
-            'total_staff' => DB::table('akun')->where('role', 'staff')->where('is_delete', false)->count(),
-            'total_obat' => DB::table('obat')->count(), // Contoh jika sudah ada tabel obat
-            'total_transaksi' => DB::table('transaksi')->count(), // Contoh jika sudah ada tabel transaksi
-            'pendapatan_bulan_ini' => DB::table('transaksi')->whereMonth('created_at', now()->month)->sum('total_harga') ?? 0,
-        ];
+        $totalObat = Obat::count();
 
-        // Memanggil view owner.dashboard dan mengirimkan data statistik ke dalamnya
-        return view('owner.dashboard', compact('statistik'));
+        $totalBatch = DetailObat::count();
+
+        $totalStaff = Akun::where(
+            'role',
+            'staff'
+        )->where(
+            'is_delete',
+            false
+        )->count();
+
+        $totalTransaksi = Transaksi::count();
+
+        $totalStok = DetailObat::sum(
+            'jumlah_stok'
+        );
+
+        $pendapatan = DB::table('detail_transaksi')
+            ->sum('total_harga');
+
+        $pendingPembelian = PembelianObat::where(
+            'status',
+            'pending'
+        )->count();
+
+        $pendingPembuangan = PembuanganObat::where(
+            'status',
+            'pending'
+        )->count();
+
+        $stokMenipis = DetailObat::where(
+            'jumlah_stok',
+            '<=',
+            20
+        )->count();
+
+        $expired30Hari = DetailObat::whereBetween(
+            'tanggal_kadaluwarsa',
+            [
+                now(),
+                now()->addDays(30)
+            ]
+        )->count();
+
+        $expired = DetailObat::where(
+            'tanggal_kadaluwarsa',
+            '<',
+            now()
+        )->count();
+
+        $user = Auth::user();
+
+        return view(
+            'owner.dashboard',
+            compact(
+                'totalObat',
+                'totalBatch',
+                'totalStaff',
+                'totalTransaksi',
+                'totalStok',
+                'pendapatan',
+                'pendingPembelian',
+                'pendingPembuangan',
+                'stokMenipis',
+                'expired30Hari',
+                'expired',
+                'user'
+            )
+        );
     }
 }

@@ -12,30 +12,32 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $akun = Auth::user();
+        $staffId = Auth::id();
 
         $totalTransaksi = Transaksi::where(
             'id_akun',
-            $akun->id
+            $staffId
         )->count();
 
         $totalPembelian = PembelianObat::where(
             'id_akun',
-            $akun->id
+            $staffId
         )->count();
 
         $totalPembuangan = PembuanganObat::where(
             'id_akun',
-            $akun->id
+            $staffId
         )->count();
+
+        $user = Auth::user();
 
         return view(
             'staff.dashboard',
             compact(
-                'akun',
                 'totalTransaksi',
                 'totalPembelian',
-                'totalPembuangan'
+                'totalPembuangan',
+                'user'
             )
         );
     }
