@@ -178,11 +178,11 @@
                 {{-- Kasir --}}
                 <a
                     href="#"
-                    class="col-span-2 p-5 rounded-2xl border border-blue-500/20 bg-blue-500/10 hover:bg-blue-500/20 transition-all flex items-center gap-4">
+                    class="col-span-2 p-5 rounded-2xl border border-green-500/20 bg-green-500/10 hover:bg-green-500/20 transition-all flex items-center gap-4">
 
-                    <div class="h-12 w-12 rounded-xl bg-blue-500/20 flex items-center justify-center">
+                    <div class="h-12 w-12 rounded-xl bg-green-500/20 flex items-center justify-center">
 
-                        <i class="fa-solid fa-cash-register text-blue-400 text-xl"></i>
+                        <i class="fa-solid fa-cash-register text-green-400 text-xl"></i>
 
                     </div>
 

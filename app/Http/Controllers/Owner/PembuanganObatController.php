@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
+use App\Models\DetailObat;
+use App\Models\Obat;
 use App\Models\PembuanganObat;
 
 class PembuanganObatController extends Controller
@@ -10,29 +12,41 @@ class PembuanganObatController extends Controller
     public function index()
     {
         $pendingPembuangan = PembuanganObat::with([
-                'staff',
-                'detailObat.obat'
-            ])
+            'staff',
+            'detailObat.obat',
+        ])
             ->where('status', 'pending')
             ->latest()
             ->get();
 
         $riwayatPembuangan = PembuanganObat::with([
-                'staff',
-                'detailObat.obat'
-            ])
+            'staff',
+            'detailObat.obat',
+        ])
             ->whereIn('status', [
                 'approved',
-                'rejected'
+                'rejected',
             ])
             ->latest()
+            ->get();
+
+        $obatAktif = Obat::where('status', 'approved')
+            ->where('is_delete', false)
+            ->latest()
+            ->get();
+
+        $detailObat = DetailObat::with('obat')
+            ->whereHas('obat')
+            ->where('jumlah_stok', '>', 0)
             ->get();
 
         return view(
             'owner.pembuangan-obat',
             compact(
                 'pendingPembuangan',
-                'riwayatPembuangan'
+                'riwayatPembuangan',
+                'obatAktif',
+                'detailObat'
             )
         );
     }
@@ -65,7 +79,7 @@ class PembuanganObatController extends Controller
         );
 
         $pembuangan->update([
-            'status' => 'approved'
+            'status' => 'approved',
         ]);
 
         return back()->with(
@@ -79,7 +93,7 @@ class PembuanganObatController extends Controller
         $pembuangan = PembuanganObat::findOrFail($id);
 
         $pembuangan->update([
-            'status' => 'rejected'
+            'status' => 'rejected',
         ]);
 
         return back()->with(

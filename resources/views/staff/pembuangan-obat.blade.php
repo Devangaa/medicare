@@ -1,4 +1,4 @@
-@extends('layouts.owner')
+@extends('layouts.staff')
 
 @section('title', 'Pembuangan Obat')
 
@@ -8,14 +8,27 @@
 
     <div class="bg-[#0f172a] border border-slate-800 rounded-2xl p-6">
 
-        <h3 class="text-xl font-bold text-white">
-            Pembuangan Obat
-        </h3>
+        <div class="flex items-center justify-between">
+            <div>
+                <h3 class="text-xl font-bold text-white">
+                    Pembuangan Obat
+                </h3>
 
-        <p class="text-sm text-slate-400 mt-1">
-            Persetujuan penghapusan obat dari stok.
-        </p>
+                <p class="text-sm text-slate-400 mt-1">
+                    Persetujuan penghapusan obat dari stok.
+                </p>
+            </div>
 
+            <button
+                onclick="openCreatePembuanganModal()"
+                class="flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-all">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Pembuangan Obat
+
+            </button>
+        </div>
     </div>
 
     <div
@@ -61,7 +74,6 @@
                             <th class="px-6 py-4">Jumlah</th>
                             <th class="px-6 py-4">Expired</th>
                             <th class="px-6 py-4">Staff</th>
-                            <th class="px-6 py-4 text-center">Aksi</th>
 
                         </tr>
 
@@ -97,37 +109,13 @@
                                     {{ $item->staff->nama_lengkap }}
                                 </td>
 
-                                <td class="px-6 py-4">
-
-                                    <div class="flex justify-center gap-2">
-
-                                        <button
-                                            onclick="openApproveModal({{ $item->id }}, '{{ $item->detailObat->obat->nama_obat }}')"
-                                            class="h-9 w-9 rounded-xl bg-emerald-600 hover:bg-emerald-500 flex items-center justify-center">
-
-                                            <i class="fa-solid fa-check text-white"></i>
-
-                                        </button>
-
-                                        <button
-                                            onclick="openRejectModal({{ $item->id }}, '{{ $item->detailObat->obat->nama_obat }}')"
-                                            class="h-9 w-9 rounded-xl bg-rose-600 hover:bg-rose-500 flex items-center justify-center">
-
-                                            <i class="fa-solid fa-xmark text-white"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                </td>
-
                             </tr>
 
                         @empty
 
                             <tr>
 
-                                <td colspan="7">
+                                <td colspan="6">
 
                                     <div class="p-12 text-center">
 
@@ -264,41 +252,23 @@
 
 <script>
 
-    function openApproveModal(id)
+    /*
+    |--------------------------------------------------------------------------
+    | TAMBAH PEMBUANGAN OBAT
+    |--------------------------------------------------------------------------
+    */
+
+    function openCreatePembuanganModal()
     {
         document
-            .getElementById('approveForm')
-            .action =
-            `/owner/pembuangan-obat/${id}/approve`;
-
-        document
-            .getElementById('approveModal')
+            .getElementById('createPembuanganModal')
             .classList.remove('hidden');
     }
 
-    function closeApproveModal()
+    function closeCreatePembuanganModal()
     {
         document
-            .getElementById('approveModal')
-            .classList.add('hidden');
-    }
-
-    function openRejectModal(id)
-    {
-        document
-            .getElementById('rejectForm')
-            .action =
-            `/owner/pembuangan-obat/${id}/reject`;
-
-        document
-            .getElementById('rejectModal')
-            .classList.remove('hidden');
-    }
-
-    function closeRejectModal()
-    {
-        document
-            .getElementById('rejectModal')
+            .getElementById('createPembuanganModal')
             .classList.add('hidden');
     }
 
@@ -395,7 +365,6 @@
 
 </script>
 
-@include('owner.modals.pembuangan-approve')
-@include('owner.modals.pembuangan-reject')
+@include('staff.modals.pembuangan-create')
 
 @endsection

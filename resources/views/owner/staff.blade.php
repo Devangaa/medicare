@@ -134,7 +134,7 @@
     function openEditModal(staffId, namaLengkap, email, noHp, alamat) {
         currentStaffId = staffId;
         const form = document.getElementById('editStaffForm');
-        form.action = `/owner/staff/${staffId}`;
+        form.action = `/owner/staff/${staffId}/edit`;
         document.getElementById('edit_nama_lengkap').value = namaLengkap;
         document.getElementById('edit_email').value = email;
         document.getElementById('edit_no_hp').value = noHp;

@@ -174,6 +174,7 @@
 <body class="bg-[#090d16] text-slate-200 h-screen flex overflow-hidden">
 
     <!-- SIDEBAR KIRI -->
+    @if (!isset($isKasir) || !$isKasir)
     <aside id="sidebar"
         class="sidebar-mobile md:relative md:h-screen w-64 bg-[#0f172a] border-r border-slate-800 flex flex-col justify-between p-5 md:flex shrink-0 transition-all duration-300 overflow-hidden">
         <div class="space-y-8 flex-1 overflow-y-auto pr-1">
@@ -248,6 +249,7 @@
 
 
     </aside>
+    @endif
 
     <!-- AREA KONTEN UTAMA (Kanan) -->
     <div class="flex-1 flex flex-col h-screen">
@@ -257,70 +259,106 @@
             
             <!-- Sisi Kiri Navbar: Hamburger (Mobile) + Ikon & Nama Halaman -->
             <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-                <!-- Hamburger Button (Mobile Only) -->
-                <button id="hamburger-mobile" class="md:hidden text-slate-400 hover:text-slate-200 transition-colors p-1.5 rounded-lg hover:bg-slate-800/40">
-                    <i class="fa-solid fa-bars text-lg"></i>
-                </button>
+                @if (!isset($isKasir) || !$isKasir)
+                    <!-- Hamburger Button (Mobile Only) -->
+                    <button id="hamburger-mobile" class="md:hidden text-slate-400 hover:text-slate-200 transition-colors p-1.5 rounded-lg hover:bg-slate-800/40">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
 
-                <!-- Ikon & Nama Halaman -->
-                <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-                    <div id="navbar-page-icon" class="text-slate-400 bg-slate-800/40 p-2 rounded-lg border border-slate-700/50 shrink-0">
-                        <i class="fa-solid fa-circle"></i>
+                    <!-- Ikon & Nama Halaman -->
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div id="navbar-page-icon" class="text-slate-400 bg-slate-800/40 p-2 rounded-lg border border-slate-700/50 shrink-0">
+                            <i class="fa-solid fa-circle"></i>
+                        </div>
+                        <h2 id="navbar-page-name" class="text-sm sm:text-lg font-bold text-white tracking-wide truncate">
+                            Dashboard
+                        </h2>
                     </div>
-                    <h2 id="navbar-page-name" class="text-sm sm:text-lg font-bold text-white tracking-wide truncate">
-                        Dashboard
-                    </h2>
-                </div>
+                @else
+                    <!-- Kasir Mode: Logo & Medicare Only -->
+                    <div class="flex items-center gap-3">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30">
+                            <i class="fa-solid fa-heart-pulse text-lg"></i>
+                        </div>
+                        <h2 class="text-lg font-bold text-white tracking-widest uppercase">Medicare</h2>
+                    </div>
+                @endif
             </div>
 
-            <!-- Sisi Kanan Navbar: Profil Akun Clickable dengan Dropdown -->
-            <div class="relative shrink-0">
-                <button id="profile-dropdown-btn" class="cursor-pointer flex items-center gap-2 sm:gap-3 p-1.5 pr-2 sm:pr-3 rounded-xl bg-slate-800/40 border border-slate-800 hover:border-slate-700/80 transition-all focus:outline-none select-none">
-                    <!-- Foto Profil -->
-                    <img class="h-8 sm:h-9 w-8 sm:w-9 rounded-lg object-cover bg-slate-700 border border-slate-600" 
-                         src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->nama_lengkap ?? 'Staff') }}&background=2563eb&color=fff" 
-                         alt="Foto Profil">
-                    <!-- Nama User (Hidden di layar HP kecil) -->
-                    <span class="text-xs sm:text-sm font-semibold text-slate-200 hidden sm:inline max-w-[100px] sm:max-w-[120px] truncate">
-                        {{ Auth::user()->nama_lengkap ?? 'Staff Medicare' }}
-                    </span>
-                    <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200" id="chevron-icon"></i>
-                </button>
+            <div class="flex items-center gap-3">
+                <!-- Tombol Kembali (Hanya di Kasir Mode) -->
+                @if (isset($isKasir) && $isKasir)
+                <a href="{{ route('staff.dashboard') }}"
+                   class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/40 hover:bg-slate-700/60 border border-slate-700 text-slate-300 hover:text-white text-sm font-semibold transition-all">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Kembali</span>
+                </a>
+                @endif
 
-                <!-- DROPDOWN MENU -->
-                <div id="profile-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 sm:w-52 rounded-2xl bg-[#0f172a] border border-slate-800 shadow-2xl p-2 z-50 animate-fade-in">
-                    <!-- Menu Profile Saya -->
-                    <a href="{{ url('/profile') }}" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-xl transition-colors">
-                        <i class="fa-regular fa-user w-4 text-slate-400"></i>
-                        <span>Profil Saya</span>
-                    </a>
-                    
-                    <hr class="border-slate-800 my-1">
-                    
-                    <!-- Menu Logout -->
-                    <form action="{{ url('/logout') }}" method="POST" class="block w-full">
-                        @csrf
-                        <button type="submit" class="cursor-pointer flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-xl transition-colors text-left focus:outline-none">
-                            <i class="fa-solid fa-arrow-right-from-bracket w-4"></i>
-                            <span>Logout</span>
-                        </button>
-                    </form>
+                <!-- Tombol Kasir (Hanya untuk Staff - Hidden in Kasir Mode) -->
+                @if (!isset($isKasir) || !$isKasir)
+                <a href="{{ route('staff.kasir.index') }}"
+                class="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl bg-green-600/20 hover:bg-green-600/30 border border-green-500/30 text-green-400 text-sm font-semibold">
+
+                    <i class="fa-solid fa-cash-register"></i>
+                    Kasir
+                </a>
+                @endif
+
+                <!-- Sisi Kanan Navbar: Profil Akun Clickable dengan Dropdown -->
+                @if (!isset($isKasir) || !$isKasir)
+                <div class="relative shrink-0">
+                    <button id="profile-dropdown-btn" class="cursor-pointer flex items-center gap-2 sm:gap-3 p-1.5 pr-2 sm:pr-3 rounded-xl bg-slate-800/40 border border-slate-800 hover:border-slate-700/80 transition-all focus:outline-none select-none">
+                        <!-- Foto Profil -->
+                        <img class="h-8 sm:h-9 w-8 sm:w-9 rounded-lg object-cover bg-slate-700 border border-slate-600" 
+                            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->nama_lengkap ?? 'Staff') }}&background=2563eb&color=fff" 
+                            alt="Foto Profil">
+                        <!-- Nama User (Hidden di layar HP kecil) -->
+                        <span class="text-xs sm:text-sm font-semibold text-slate-200 hidden sm:inline max-w-[100px] sm:max-w-[120px] truncate">
+                            {{ Auth::user()->nama_lengkap ?? 'Staff Medicare' }}
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200" id="chevron-icon"></i>
+                    </button>
+
+                    <!-- DROPDOWN MENU -->
+                    <div id="profile-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 sm:w-52 rounded-2xl bg-[#0f172a] border border-slate-800 shadow-2xl p-2 z-50 animate-fade-in">
+                        <!-- Menu Profile Saya -->
+                        <a href="{{ url('/profile') }}" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-xl transition-colors">
+                            <i class="fa-regular fa-user w-4 text-slate-400"></i>
+                            <span>Profil Saya</span>
+                        </a>
+                        
+                        <hr class="border-slate-800 my-1">
+                        
+                        <!-- Menu Logout -->
+                        <form action="{{ url('/logout') }}" method="POST" class="block w-full">
+                            @csrf
+                            <button type="submit" class="cursor-pointer flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-xl transition-colors text-left focus:outline-none">
+                                <i class="fa-solid fa-arrow-right-from-bracket w-4"></i>
+                                <span>Logout</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
+                @endif
             </div>
         </header>
 
         <!-- ISI KONTEN UTAMA (Yang akan diisi oleh view dashboard) -->
-        <main class="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto">
+        <main class="flex-1 {{ (isset($isKasir) && $isKasir) ? 'p-0 overflow-hidden' : 'p-4 sm:p-6 md:p-8 overflow-y-auto' }}">
             @yield('content')
         </main>
     </div>
 
     <!-- OVERLAY SIDEBAR MOBILE -->
+    @if (!isset($isKasir) || !$isKasir)
     <div id="sidebar-overlay" class="hidden fixed inset-0 bg-black/50 z-40 md:hidden"></div>
+    @endif
 
     <!-- LOGIK JAVASCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            @if (!isset($isKasir) || !$isKasir)
             const sidebar = document.getElementById('sidebar');
             const sidebarLogoToggle = document.getElementById('sidebar-logo-toggle');
             const sidebarLogoToggleMobile = document.getElementById('sidebar-logo-toggle-mobile');
@@ -375,24 +413,6 @@
                 });
             });
 
-            // ========== DROPDOWN PROFILE ==========
-            const btn = document.getElementById('profile-dropdown-btn');
-            const menu = document.getElementById('profile-dropdown-menu');
-            const chevron = document.getElementById('chevron-icon');
-
-            btn.addEventListener('click', function (e) {
-                e.stopPropagation();
-                menu.classList.toggle('hidden');
-                chevron.classList.toggle('rotate-180');
-            });
-
-            document.addEventListener('click', function (e) {
-                if (!btn.contains(e.target) && !menu.contains(e.target)) {
-                    menu.classList.add('hidden');
-                    chevron.classList.remove('rotate-180');
-                }
-            });
-
             // ========== CLOSE SIDEBAR MOBILE AFTER MENU CLICK ==========
             menuItems.forEach(item => {
                 item.addEventListener('click', function () {
@@ -402,6 +422,27 @@
                     }
                 });
             });
+            @endif
+
+            // ========== DROPDOWN PROFILE ==========
+            const btn = document.getElementById('profile-dropdown-btn');
+            if (btn) {
+                const menu = document.getElementById('profile-dropdown-menu');
+                const chevron = document.getElementById('chevron-icon');
+
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    menu.classList.toggle('hidden');
+                    chevron.classList.toggle('rotate-180');
+                });
+
+                document.addEventListener('click', function (e) {
+                    if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                        menu.classList.add('hidden');
+                        chevron.classList.remove('rotate-180');
+                    }
+                });
+            }
         });
     </script>
 </body>

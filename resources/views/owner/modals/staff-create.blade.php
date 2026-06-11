@@ -18,6 +18,13 @@
 
             @csrf
 
+            <div id="errorAlert" class="hidden mx-6 mt-6 bg-red-500/20 border border-red-500 rounded-xl p-4">
+                <h4 class="text-sm font-bold text-red-400 mb-2">
+                    <i class="fa-solid fa-circle-exclamation mr-2"></i>Ada kesalahan:
+                </h4>
+                <ul id="errorList" class="text-sm text-red-300 space-y-1"></ul>
+            </div>
+
             <div class="p-6 grid md:grid-cols-2 gap-4">
 
                 <div>
@@ -170,35 +177,96 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
+    // Password toggle
     document.querySelectorAll('#createStaffModal .toggle-password').forEach(button => {
+        button.addEventListener('click', function () {
+            const wrapper = this.closest('.relative');
+            const input = wrapper.querySelector('.password-input');
+            const eyeOpen = wrapper.querySelector('.eye-open');
+            const eyeClose = wrapper.querySelector('.eye-close');
 
-            button.addEventListener('click', function () {
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeOpen.classList.add('hidden');
+                eyeClose.classList.remove('hidden');
+            } else {
+                input.type = 'password';
+                eyeOpen.classList.remove('hidden');
+                eyeClose.classList.add('hidden');
+            }
+        });
+    });
 
-                const wrapper = this.closest('.relative');
+    // Form submission handler
+    const form = document.getElementById('createStaffForm');
+    const submitBtn = form.querySelector('.submit-btn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    const errorAlert = document.getElementById('errorAlert');
+    const errorList = document.getElementById('errorList');
 
-                const input = wrapper.querySelector('.password-input');
-                const eyeOpen = wrapper.querySelector('.eye-open');
-                const eyeClose = wrapper.querySelector('.eye-close');
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-                if (input.type === 'password') {
+        // Hide error alert
+        errorAlert.classList.add('hidden');
+        errorList.innerHTML = '';
 
-                    input.type = 'text';
+        // Disable submit button
+        submitBtn.disabled = true;
+        btnText.classList.add('hidden');
+        btnLoading.classList.remove('hidden');
 
-                    eyeOpen.classList.add('hidden');
-                    eyeClose.classList.remove('hidden');
+        const formData = new FormData(form);
 
-                } else {
-
-                    input.type = 'password';
-
-                    eyeOpen.classList.remove('hidden');
-                    eyeClose.classList.add('hidden');
-
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
                 }
-
             });
 
-        });
+            const data = await response.json();
+
+            if (response.ok) {
+                // Success - close modal and reload page
+                closeCreateModal();
+                location.reload();
+            } else {
+                // Show errors
+                if (data.errors) {
+                    const errorMessages = Object.values(data.errors).flat();
+                    errorMessages.forEach(message => {
+                        const li = document.createElement('li');
+                        li.textContent = '• ' + message;
+                        errorList.appendChild(li);
+                    });
+                }
+                errorAlert.classList.remove('hidden');
+
+                // Re-enable button
+                submitBtn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+
+                // Scroll to error
+                errorAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            const li = document.createElement('li');
+            li.textContent = '• Terjadi kesalahan jaringan. Silakan coba lagi.';
+            errorList.appendChild(li);
+            errorAlert.classList.remove('hidden');
+
+            // Re-enable button
+            submitBtn.disabled = false;
+            btnText.classList.remove('hidden');
+            btnLoading.classList.add('hidden');
+        }
+    });
 
 });
 </script>

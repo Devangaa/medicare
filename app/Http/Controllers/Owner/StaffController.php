@@ -26,8 +26,8 @@ class StaffController extends Controller
     }
 
     /**
-    * Menambahkan staff baru
-    */
+     * Menambahkan staff baru
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -61,6 +61,10 @@ class StaffController extends Controller
             'role' => 'staff',
             'is_delete' => false,
         ]);
+
+        if ($request->wantsJson() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
+            return response()->json(['success' => 'Staff berhasil ditambahkan.']);
+        }
 
         return redirect()
             ->route('owner.staff.index')

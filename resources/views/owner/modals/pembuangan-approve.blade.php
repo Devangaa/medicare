@@ -9,7 +9,7 @@ class="hidden fixed inset-0 z-[999] flex items-center justify-center p-4">
         class="relative w-full max-w-md rounded-3xl bg-[#0f172a] border border-slate-700">
 
         @csrf
-        @method('PUT')
+        @method('PATCH')
 
         <div class="p-6">
 
